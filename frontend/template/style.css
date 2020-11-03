@@ -36,6 +36,10 @@ body {
   text-decoration: none;
 }
 
+.brand a:hover {
+  color: yellow;
+}
+
 .header-links a {
   color: white;
   padding: 1rem;
@@ -115,8 +119,13 @@ body {
   cursor: pointer;
 }
 
+.brand button:hover {
+  color: yellow;
+}
+
 .sidebar {
   position: fixed;
+  transition: all .5s;
   transform: translateX(-30rem);
   width: 30rem;
   height: 100%;
