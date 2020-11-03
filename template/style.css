@@ -104,3 +104,38 @@ body {
 .product-rating {
   font-size: 1rem;
 }
+
+/* side-bar */
+.brand button {
+  font-size: 3rem;
+  padding: .5rem;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  transform: translateX(-30rem);
+  width: 30rem;
+  height: 100%;
+  background-color: grey;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-close-button {
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  right: .5rem;
+  top: .5rem;
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  padding: .5rem;
+}
