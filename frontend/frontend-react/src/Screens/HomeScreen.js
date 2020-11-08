@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { listProducts } from '../actions/productionActions';
 // import data from '../dummyData';
 
 function HomeScreen(props) {
-  const [products, setProduct] = useState([]);
+  // const [products, setProduct] = useState([]);
+  // instead of useState, we will use useSelector
+  const productList = useSelector(state => state.productList);
+  // from productList, use object deconstruction to grab products, loading, error
+  const { products, loading, error } = productList;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // define async func
-    const fetchData = async () => {
-      // {data} bc requested object has a proprietary data
-      const { data } = await axios.get('/api/products');
-      setProduct(data);
-    }
+    // {data} bc requested object has a proprietary data
+    // const fetchData = async () => {
+    //   const { data } = await axios.get('/api/products');
+    //   setProduct(data);
+    // }
+    // fetchData();
 
-    fetchData();
+    dispatch(listProducts());
 
     return () => {
 
@@ -22,25 +30,27 @@ function HomeScreen(props) {
   }, []);
 
   return (
-    <ul className='products'>
-      {
-        products.map(product =>
-          <li key={product._id}>
-            <div className='product'>
-              <Link to={'/product/' + product._id}>
-                <img className='product-image' src={product.image} alt='product' />
-              </Link>
-              <div className='product-name'>
-                <Link to={'/product/' + product._id}>{product.name}</Link>
-              </div>
-              <div className='product-brand'>{product.brand}</div>
-              <div className='product-price'>{product.price}</div>
-              <div className='product-rating'>{product.rating} Stars {product.numReviews}</div>
-            </div>
-          </li>
-        )
-      }
-    </ul>
+    loading ? <div>Loading...</div> :
+      error ? <div>{error}</div> :
+        <ul className='products'>
+          {
+            products.map(product =>
+              <li key={product._id}>
+                <div className='product'>
+                  <Link to={'/product/' + product._id}>
+                    <img className='product-image' src={product.image} alt='product' />
+                  </Link>
+                  <div className='product-name'>
+                    <Link to={'/product/' + product._id}>{product.name}</Link>
+                  </div>
+                  <div className='product-brand'>{product.brand}</div>
+                  <div className='product-price'>{product.price}</div>
+                  <div className='product-rating'>{product.rating} Stars {product.numReviews}</div>
+                </div>
+              </li>
+            )
+          }
+        </ul>
   )
 }
 
