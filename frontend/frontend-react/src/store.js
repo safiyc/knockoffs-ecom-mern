@@ -1,12 +1,13 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { productListReducer } from './reducers/productReducers';
+import { productDetailsReducer, productListReducer } from './reducers/productReducers';
 
 // initialState is empty object
 const initialState = {};
 // reducer is a func that gets the state and action, and returns new state based on that action
 const reducer = combineReducers({
   productList: productListReducer,
+  productDetails: productDetailsReducer
 });
 
 // thunnk middleware for redux that allows async func inside action of redux
