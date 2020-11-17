@@ -8,7 +8,8 @@ const data = {
       image: '/images/iTap.webp',
       price: 250,
       rating: 3.5,
-      numReviews: 25
+      numReviews: 25,
+      countInStock: 0
     },
     {
       _id: '2',
@@ -18,7 +19,8 @@ const data = {
       image: '/images/iTap.webp',
       price: 450,
       rating: 4.5,
-      numReviews: 105
+      numReviews: 105,
+      countInStock: 6
     },
     {
       _id: '3',
@@ -28,7 +30,8 @@ const data = {
       image: '/images/iTap.webp',
       price: 10.25,
       rating: 4.8,
-      numReviews: 25
+      numReviews: 25,
+      countInStock: 6
     },
     {
       _id: '4',
@@ -38,7 +41,8 @@ const data = {
       image: '/images/iTap.webp',
       price: 24,
       rating: 5,
-      numReviews: 35
+      numReviews: 35,
+      countInStock: 6
     }
   ]
 }
