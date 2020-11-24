@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import addToCart from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 // import { cartReducer } from '../reducers/cartReducer';
 import { Link } from 'react-router-dom';
 
@@ -16,12 +16,20 @@ function CartScreen(props) {
   const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
 
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
+
   useEffect(() => {
     // if productId exists
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
   }, []);
+
+  const checkoutHandler = () => {
+    props.history.push('/signin?redirect=shipping');
+  }
 
   return (
     <div className='cart'>
@@ -51,12 +59,13 @@ function CartScreen(props) {
                     </div>
                     <div>
                       Qty:
-                      <select>
+                      {/* qty change in cartscreen is reflected in subtotal section */}
+                      <select value={item.qty} onChange={(e) => dispatch(addToCart(item.product, e.target.value))}>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
                       </select>
-                      <button type='button' className='button'>
+                      <button type='button' className='button' onClick={() => removeFromCartHandler(item.product)}>
                         Delete
                       </button>
                     </div>
@@ -76,7 +85,7 @@ function CartScreen(props) {
           {/* price of items */}
           ${cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
         </h3>
-        <button className='button primary' disabled={cartItems.length === 0}>
+        <button onClick={checkoutHandler} className='button primary full-width' disabled={cartItems.length === 0}>
           Proceed to Checkout
         </button>
       </div>

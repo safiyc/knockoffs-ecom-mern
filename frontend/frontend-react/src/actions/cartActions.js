@@ -1,8 +1,10 @@
 import axios from 'axios';
-import CART_ADD_ITEM from '../constants/cartConstants';
+import Cookie from 'js-cookie'; // save data at browser refresh
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants';
 
 //  addToCart returns another func with dispatch arg
-const addToCart = (productId, qty) => async (dispatch) => {
+// getState from redux-thunk
+const addToCart = (productId, qty) => async (dispatch, getState) => {
   try {
     const { data } = await axios.get('/api/products/' + productId);
     dispatch({
@@ -14,10 +16,23 @@ const addToCart = (productId, qty) => async (dispatch) => {
         countInStock: data.countInStock,
         qty
       }
-    })
+    });
+
+    // to save qty to cookies
+    const { cart: { cartItems } } = getState();
+    Cookie.set('cartItems', JSON.stringify(cartItems));
+
   } catch (error) {
 
   }
 }
 
-export default addToCart;
+const removeFromCart = (productId) => (dispatch, getState) => {
+  dispatch({ type: CART_REMOVE_ITEM, payload: productId });
+
+  // to save qty to cookies
+  const { cart: { cartItems } } = getState();
+  Cookie.set('cartItems', JSON.stringify(cartItems))
+}
+
+export { addToCart, removeFromCart };
